@@ -22,5 +22,4 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
           raise Exception(f"Error: malformed markup is missing end tag for {delimiter}")
         new_nodes.append(TextNode(part, text_type))
 
-
   return new_nodes
