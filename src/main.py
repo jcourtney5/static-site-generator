@@ -1,8 +1,11 @@
 import os
 import shutil
 
+from generate_page import generate_page
+
 def main():
   build_public_folder()
+  #build_html_from_content()
 
 
 def build_public_folder():
@@ -39,6 +42,15 @@ def copy_files(source_dir, dest_dir):
       os.mkdir(item_dest_full_path)
       copy_files(item_source_full_path, item_dest_full_path)
 
+
+def build_html_from_content():
+  root_dir = os.getcwd()
+
+  md_file = os.path.join(root_dir, 'content/index.md')
+  template_file = os.path.join(root_dir, 'template.html')
+  dest_file = os.path.join(root_dir, 'public/index.html')
+
+  generate_page(md_file, template_file, dest_file)
 
 if __name__ == "__main__":
     main()
