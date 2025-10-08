@@ -1,11 +1,11 @@
 import os
 import shutil
 
-from generate_page import generate_page
+from generate_pages_recursive import generate_pages_recursive
 
 def main():
   build_public_folder()
-  #build_html_from_content()
+  build_html_from_content()
 
 
 def build_public_folder():
@@ -46,11 +46,11 @@ def copy_files(source_dir, dest_dir):
 def build_html_from_content():
   root_dir = os.getcwd()
 
-  md_file = os.path.join(root_dir, 'content/index.md')
-  template_file = os.path.join(root_dir, 'template.html')
-  dest_file = os.path.join(root_dir, 'public/index.html')
+  dir_path_content = os.path.join(root_dir, 'content')
+  template_path = os.path.join(root_dir, 'template.html')
+  dest_dir_path = os.path.join(root_dir, 'public')
 
-  generate_page(md_file, template_file, dest_file)
+  generate_pages_recursive(dir_path_content, template_path, dest_dir_path)
 
 if __name__ == "__main__":
     main()
