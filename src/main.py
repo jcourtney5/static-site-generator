@@ -1,28 +1,36 @@
 import os
+import sys
 import shutil
 
 from generate_pages_recursive import generate_pages_recursive
 
 def main():
+  # make sure there is a basepath arguement
+  if len(sys.argv) < 2:
+    print("first arguement required for 'basepath'")
+    return
+
+  basepath = sys.argv[1]
+
   build_public_folder()
-  build_html_from_content()
+  build_html_from_content(basepath)
 
 
 def build_public_folder():
   root_dir = os.getcwd()
 
   # get full paths
-  public_folder = os.path.join(root_dir, 'public')
+  docs_folder = os.path.join(root_dir, 'docs')
   static_folder = os.path.join(root_dir, 'static')
 
   # delete public folder and recreate it
-  if os.path.exists(public_folder):
-    shutil.rmtree(public_folder)
-  os.mkdir(public_folder)
-  print("cleared public folder")
+  if os.path.exists(docs_folder):
+    shutil.rmtree(docs_folder)
+  os.mkdir(docs_folder)
+  print("cleared docs folder")
 
   # copy entire contents from static to public
-  copy_files(static_folder, public_folder)
+  copy_files(static_folder, docs_folder)
 
 
 def copy_files(source_dir, dest_dir):
@@ -43,14 +51,14 @@ def copy_files(source_dir, dest_dir):
       copy_files(item_source_full_path, item_dest_full_path)
 
 
-def build_html_from_content():
+def build_html_from_content(basepath):
   root_dir = os.getcwd()
 
   dir_path_content = os.path.join(root_dir, 'content')
   template_path = os.path.join(root_dir, 'template.html')
-  dest_dir_path = os.path.join(root_dir, 'public')
+  dest_dir_path = os.path.join(root_dir, 'docs')
 
-  generate_pages_recursive(dir_path_content, template_path, dest_dir_path)
+  generate_pages_recursive(basepath, dir_path_content, template_path, dest_dir_path)
 
 if __name__ == "__main__":
     main()
